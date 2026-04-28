@@ -1,7 +1,20 @@
 function [attempts,simtime] = runSimulation(handles)
 
+attempts = [];
+simtime = [];
+
 loop = str2double(handles.numBombs.String);
 dt = str2double(handles.dtText.String);
+
+if isnan(loop) || loop <= 0 || mod(loop,1) ~= 0
+    errordlg('Number of bombs must be a positive whole number.', 'Invalid Simulation Input');
+    return;
+end
+
+if isnan(dt) || dt <= 0
+    errordlg('Simulation time step (dt) must be a positive number.', 'Invalid Simulation Input');
+    return;
+end
 
 % runs new simulation
 if handles.startButton.Value == 1

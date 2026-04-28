@@ -1,25 +1,97 @@
-# Intro to Engineering Final Project: Bomb Defusal Simulator
-Originally Submitted April 27, 2017 to Professor [Brian Smith](https://engineering.nd.edu/profiles/bsmith).
+# Bomb Defusal MATLAB Game
 
-## Addendum:
-### TL;DR: Go to the [releases](https://github.com/nmarcopo/bombDefusal/releases) section to download the binary!
-At the time of writing this, over a year has passed since my group and I first submitted and presented this project to my Intro to Engineering class. It still stands as the most fun I've had with a programming project to date, mostly due to the chemistry of our team and the novelty of the project. Despite a few bumps early on and several all nighters close to the deadline, we pulled through and came to our demonstration day with a great project.  
-I'd like to emphasize that while I am very proud of this project and all of the work we put into it, this was our FIRST experience on any large programming project, and as a result the code is *really* messy. There's plenty of unused variables, poor style, and far too few comments for a project of this size. If you have any questions about what a line of code does, what a variable means, or anything else, feel free to contact me via my website, [nick.marcopo.li](http://nick.marcopo.li).  
-Thanks for checking out this project!  
--Nick  
-Shoutout to the team at Steel Crate Games for inspiring us with [Keep Talking and Nobody Explodes](http://www.keeptalkinggame.com/)!
+A MATLAB bomb-defusal game inspired by puzzle-based teamwork games. One player interacts with a randomized bomb interface while another follows the manual (`res/bombDefusal.pdf`) to guide defusal decisions.
 
-# Team Members:
-Nick Marcopoli  
-Andy Shin  
-Santiago Calderon Novoa  
-Patrick West  
-Thomas Eckburg  
+## Project Overview
+This repository contains two main experiences:
+1. **Interactive game mode**: Defuse a randomized bomb before time runs out.
+2. **Simulation mode**: Compare automatic solvers (random, brute-force, and rule-based).
 
-# Video Demonstration:
-Each group was required to create a video demonstration of their project for their grader. I've linked our video below:  
-[Video Here](https://drive.google.com/file/d/0Bw-yvApdS7mzdGxQdWlZNzFJY0E/view?usp=sharing)  
-We also wrote up an executive summary of our project, which is just a high level overview of our work. I've included this, along with our demonstration day presentation and instruction manual, in the `res` folder of this repo.
+The project has been cleaned up to include a clear entry point, better error handling, improved player feedback, and onboarding documentation.
 
-# Instructions:
-First, grab a friend and print out our instruction manual, found in the `res` folder of this repo. Don't read through it just yet! Next, run the initialMenu.m file. Click on the difficulty you'd like to play on (we recommend starting on `very easy mode`) and press `Play Game`. Have your friend open the instruction manual and read through it - your objective will become clear as your friend reads. Have fun!
+## Features
+- Randomized bomb generation each round (wires, switches, buttons, and numpad).
+- Multiple game difficulties with time pressure.
+- Lives-based fail state with optional visual hints in **Very Easy** mode.
+- Sound cues for urgency, success, and failure.
+- Solver simulation and comparative timing charts.
+- New single-command entry point: `startBombDefusalGame`.
+
+## Requirements
+- MATLAB (tested with GUIDE-compatible MATLAB versions; likely works on R2018b+ and newer).
+- Image Processing Toolbox (`imread`, `imshow`, `imresize`).
+- Audio playback support for `.mp3` files.
+
+## Quick Start (How to Run)
+1. Open MATLAB.
+2. Clone or download this repository.
+3. In MATLAB, set the **Current Folder** to this project root.
+4. Run:
+   ```matlab
+   startBombDefusalGame
+   ```
+5. In the menu:
+   - Choose a difficulty.
+   - Click **Play Game** to launch gameplay, or **Simulation** to run automated solver experiments.
+
+## Gameplay Instructions
+1. Select a difficulty in the initial menu.
+2. Press **Play Game**.
+3. Inspect the four modules on the bomb:
+   - Wires
+   - Switches
+   - Buttons
+   - Numpad
+4. Use the rule manual in `res/bombDefusal.pdf` to determine:
+   - Which wires to cut
+   - Which switches to flip
+   - Which button to press
+   - What code to enter
+5. Press **Apply** to submit your full solution.
+6. You have 3 lives; incorrect attempts remove a life.
+7. Defuse the bomb before the timer reaches zero.
+
+## Simulation Mode
+1. From the main menu, click **Simulation**.
+2. Enter:
+   - Number of bombs
+   - Time step (`dt`)
+3. Press **Start**.
+4. Review generated timing and failure statistics.
+
+> Input validation now warns for invalid bomb count or `dt` values.
+
+## File Structure
+```text
+.
+├── startBombDefusalGame.m      # Main entry point (recommended launcher)
+├── initialMenu.m/.fig          # Main menu GUI
+├── projectTool.m/.fig          # Main bomb gameplay GUI
+├── bombSimulationTool.m/.fig   # Simulation GUI
+├── BombGenerator.m             # Random bomb generation
+├── BombSolution.m              # Rule-based solution generation
+├── runSimulation.m             # Simulation run loop and plotting
+├── timedecrement.m             # Countdown timer and win/loss trigger
+├── res/
+│   ├── bombDefusal.pdf         # Gameplay manual/rules
+│   ├── executiveSummary.pdf
+│   └── demonstrationDayPresentation.pdf
+└── media assets (.png/.mp3/.mat/.fig)
+```
+
+## Screenshots / Demo
+- **Main Menu**: _placeholder_
+- **Gameplay Screen**: _placeholder_
+- **Simulation Dashboard**: _placeholder_
+
+If you add screenshots later, place them in a `docs/` or `assets/` folder and link them here.
+
+## Future Improvements
+- Migrate GUIDE GUIs to App Designer.
+- Add automated MATLAB unit tests for solver logic.
+- Add keyboard shortcuts for numpad entry.
+- Save and load gameplay sessions.
+- Package as a MATLAB App (`.mlappinstall`).
+
+## Credits
+Originally developed as an Intro to Engineering final project (2017). This version focuses on reliability, usability, and portfolio-readiness while preserving the original game concept.

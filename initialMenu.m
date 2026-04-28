@@ -60,7 +60,13 @@ guidata(hObject, handles);
 
 % UIWAIT makes initialMenu wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-BombImage = imread('BombPic.png');
+projectRoot = fileparts(mfilename('fullpath'));
+BombImagePath = fullfile(projectRoot, 'BombPic.png');
+if exist(BombImagePath, 'file') ~= 2
+    errordlg('BombPic.png was not found. Run startBombDefusalGame from the project folder.', 'Missing Asset');
+    return;
+end
+BombImage = imread(BombImagePath);
 
 BombImageBig = imresize(BombImage, 1.25, 'bilinear');
 
@@ -102,6 +108,9 @@ elseif handles.hard.Value == 1
     gameMode = 'hard';
 elseif handles.veryeasy.Value == 1
     gameMode = 'very easy';
+else
+    warndlg('No difficulty selected. Defaulting to Easy mode.', 'Difficulty Not Selected');
+    gameMode = 'easy';
 end
 save('gameMode.mat','gameMode');
 
