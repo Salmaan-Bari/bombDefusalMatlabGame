@@ -305,7 +305,7 @@ CurrentSolution.AllInOne = [CurrentSolution.Wires, CurrentSolution.Switches, ...
 load('gameMode.mat');
 
 
-if CurrentSolution.AllInOne == Solution.AllInOne
+if isequal(CurrentSolution.AllInOne, Solution.AllInOne)
     
     handles.life1.BackgroundColor = [0 .94 .05];
     handles.life2.BackgroundColor = [0 .94 .05];
@@ -315,108 +315,25 @@ else
     Lives = Lives - 1;
     if Lives == 2
         handles.life3.BackgroundColor = [.4 .4 .4];
-        [failsound,fs] = audioread('fail.mp3');
-        sound(failsound,fs);
+        playSoundIfAvailable('fail.mp3');
         
         if strcmp(gameMode,'very easy')
-            handles.wiresHint.Visible = 'on';
-            if CurrentSolution.Wires == Solution.Wires
-                handles.wiresHint.BackgroundColor = [0 1 0];
-            else
-                handles.wiresHint.BackgroundColor = [1 0 0];
-                
-            end
-            
-            handles.buttonsHint.Visible = 'on';
-            if CurrentSolution.Buttons == Solution.Buttons
-                handles.buttonsHint.BackgroundColor = [0 1 0];
-            else
-                handles.buttonsHint.BackgroundColor = [1 0 0];
-            end
-            
-            handles.switchesHint.Visible = 'on';
-            if CurrentSolution.Switches == Solution.Switches
-                handles.switchesHint.BackgroundColor = [0 1 0];
-            else
-                handles.switchesHint.BackgroundColor = [1 0 0];
-            end
-            
-            handles.numpadHint.Visible = 'on';
-            if CurrentSolution.Numpad == Solution.Numpad
-                handles.numpadHint.BackgroundColor = [0 1 0];
-            else
-                handles.numpadHint.BackgroundColor = [1 0 0];
-            end
+            handles = updateVeryEasyHints(handles, CurrentSolution, Solution);
         end
     end
     if Lives == 1
         handles.life2.BackgroundColor = [.4 .4 .4];
-        [failsound,fs] = audioread('fail.mp3');
-        sound(failsound,fs);
+        playSoundIfAvailable('fail.mp3');
         
         if strcmp(gameMode,'very easy')
-            handles.wiresHint.Visible = 'on';
-            if CurrentSolution.Wires == Solution.Wires
-                handles.wiresHint.BackgroundColor = [0 1 0];
-            else
-                handles.wiresHint.BackgroundColor = [1 0 0];
-                
-            end
-            
-            handles.buttonsHint.Visible = 'on';
-            if CurrentSolution.Buttons == Solution.Buttons
-                handles.buttonsHint.BackgroundColor = [0 1 0];
-            else
-                handles.buttonsHint.BackgroundColor = [1 0 0];
-            end
-            
-            handles.switchesHint.Visible = 'on';
-            if CurrentSolution.Switches == Solution.Switches
-                handles.switchesHint.BackgroundColor = [0 1 0];
-            else
-                handles.switchesHint.BackgroundColor = [1 0 0];
-            end
-            
-            handles.numpadHint.Visible = 'on';
-            if CurrentSolution.Numpad == Solution.Numpad
-                handles.numpadHint.BackgroundColor = [0 1 0];
-            else
-                handles.numpadHint.BackgroundColor = [1 0 0];
-            end
+            handles = updateVeryEasyHints(handles, CurrentSolution, Solution);
         end
     end
     if Lives == 0
         handles.life1.BackgroundColor = [.4 .4 .4];
         
         if strcmp(gameMode,'very easy')
-            handles.wiresHint.Visible = 'on';
-            if CurrentSolution.Wires == Solution.Wires
-                handles.wiresHint.BackgroundColor = [0 1 0];
-            else
-                handles.wiresHint.BackgroundColor = [1 0 0];
-                
-            end
-            
-            handles.buttonsHint.Visible = 'on';
-            if CurrentSolution.Buttons == Solution.Buttons
-                handles.buttonsHint.BackgroundColor = [0 1 0];
-            else
-                handles.buttonsHint.BackgroundColor = [1 0 0];
-            end
-            
-            handles.switchesHint.Visible = 'on';
-            if CurrentSolution.Switches == Solution.Switches
-                handles.switchesHint.BackgroundColor = [0 1 0];
-            else
-                handles.switchesHint.BackgroundColor = [1 0 0];
-            end
-            
-            handles.numpadHint.Visible = 'on';
-            if CurrentSolution.Numpad == Solution.Numpad
-                handles.numpadHint.BackgroundColor = [0 1 0];
-            else
-                handles.numpadHint.BackgroundColor = [1 0 0];
-            end
+            handles = updateVeryEasyHints(handles, CurrentSolution, Solution);
         end
         
         handles.applyButton.Visible = 'off';
@@ -425,6 +342,7 @@ else
     end
 end
 save('BombCurrent.mat', 'Bomb','Lives', 'Solution');
+guidata(hObject, handles);
 
 
 
@@ -434,70 +352,70 @@ function num7_Callback(hObject, eventdata, handles)
 % hObject    handle to num7 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'7'];
+appendDigit(handles, '7');
 
 % --- Executes on button press in num8.
 function num8_Callback(hObject, eventdata, handles)
 % hObject    handle to num8 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'8'];
+appendDigit(handles, '8');
 
 % --- Executes on button press in num9.
 function num9_Callback(hObject, eventdata, handles)
 % hObject    handle to num9 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'9'];
+appendDigit(handles, '9');
 
 % --- Executes on button press in num4.
 function num4_Callback(hObject, eventdata, handles)
 % hObject    handle to num4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'4'];
+appendDigit(handles, '4');
 
 % --- Executes on button press in num5.
 function num5_Callback(hObject, eventdata, handles)
 % hObject    handle to num5 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'5'];
+appendDigit(handles, '5');
 
 % --- Executes on button press in num6.
 function num6_Callback(hObject, eventdata, handles)
 % hObject    handle to num6 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'6'];
+appendDigit(handles, '6');
 
 % --- Executes on button press in num1.
 function num1_Callback(hObject, eventdata, handles)
 % hObject    handle to num1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'1'];
+appendDigit(handles, '1');
 
 % --- Executes on button press in num2.
 function num2_Callback(hObject, eventdata, handles)
 % hObject    handle to num2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'2'];
+appendDigit(handles, '2');
 
 % --- Executes on button press in num3.
 function num3_Callback(hObject, eventdata, handles)
 % hObject    handle to num3 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'3'];
+appendDigit(handles, '3');
 
 % --- Executes on button press in num0.
 function num0_Callback(hObject, eventdata, handles)
 % hObject    handle to num0 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.numDisplay.String=[handles.numDisplay.String,'0'];
+appendDigit(handles, '0');
 
 % --- Executes on button press in clearButton.
 function clearButton_Callback(hObject, eventdata, handles)
@@ -618,6 +536,40 @@ function checkbox9_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of checkbox9
+
+function handles = updateVeryEasyHints(handles, currentSolution, solution)
+handles.wiresHint.Visible = 'on';
+handles.buttonsHint.Visible = 'on';
+handles.switchesHint.Visible = 'on';
+handles.numpadHint.Visible = 'on';
+
+handles.wiresHint.BackgroundColor = getHintColor(isequal(currentSolution.Wires, solution.Wires));
+handles.buttonsHint.BackgroundColor = getHintColor(isequal(currentSolution.Buttons, solution.Buttons));
+handles.switchesHint.BackgroundColor = getHintColor(isequal(currentSolution.Switches, solution.Switches));
+handles.numpadHint.BackgroundColor = getHintColor(isequal(currentSolution.Numpad, solution.Numpad));
+
+function color = getHintColor(isCorrect)
+if isCorrect
+    color = [0 1 0];
+else
+    color = [1 0 0];
+end
+
+function playSoundIfAvailable(audioFile)
+if exist(audioFile, 'file') == 2
+    [audioData, fs] = audioread(audioFile);
+    sound(audioData, fs);
+end
+
+function appendDigit(handles, digitCharacter)
+currentValue = handles.numDisplay.String;
+if numel(currentValue) >= 12
+    return;
+end
+if isempty(regexp(currentValue, '^\d*$', 'once'))
+    currentValue = '';
+end
+handles.numDisplay.String = [currentValue, digitCharacter];
 
 
 % --- Executes on button press in checkbox10.

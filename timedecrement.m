@@ -14,7 +14,7 @@ handles.Timer.String = num2str(tStart);
 
 t = str2double(handles.Timer.String);
 while t > 0
-    if handles.life1.BackgroundColor == [0 .94 1]
+    if isColorMatch(handles.life1.BackgroundColor, [0 .94 1])
         drawnow
         
         t=str2double(handles.Timer.String); %the t value for the string
@@ -26,25 +26,21 @@ while t > 0
         handles.Timer.String = num2str(t);%update t
         
         if t < 30 && t >= 10
-            [beeping,fs] = audioread('beep.mp3');
-            sound(beeping,fs);
+            safePlaySound('beep.mp3');
         end
         
         if t < 10 && t >= 0
-            [beeping,fs] = audioread('beepfast.mp3');
-            sound(beeping,fs);
+            safePlaySound('beepfast.mp3');
         end
         
         pause(1);
         
-    elseif handles.life1.BackgroundColor == [0 .94 .05]
-        [yaysound,fs] = audioread('yay.mp3');
-        sound(yaysound,fs);
+    elseif isColorMatch(handles.life1.BackgroundColor, [0 .94 .05])
+        safePlaySound('yay.mp3');
         winScreen;
         break
     else
-        [explode,fs] = audioread('lose.mp3');
-        sound(explode,fs);
+        safePlaySound('lose.mp3');
         loseScreen;
         break
     end
@@ -53,4 +49,13 @@ end
 if t == 0
     handles.applyButton.Visible = 'off';
     loseScreen;
+end
+
+function tf = isColorMatch(actualColor, expectedColor)
+tf = isequal(round(actualColor, 4), round(expectedColor, 4));
+
+function safePlaySound(audioFile)
+if exist(audioFile, 'file') == 2
+    [audioData, sampleRate] = audioread(audioFile);
+    sound(audioData, sampleRate);
 end

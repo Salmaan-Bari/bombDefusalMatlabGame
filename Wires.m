@@ -5,9 +5,6 @@ function [WireOrder, WireNum] = Wires
 % correspond to a different color for the wires
 % Currently generates either four or five different wires
 
-clear
-clc
-
 %% Wire Array
 WireNum = randi(2);
 % if WireNum is generated as 1, there will be four wires, if Wirenum is

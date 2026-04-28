@@ -1,0 +1,31 @@
+# MATLAB cache and autosave
+*.asv
+*.autosave
+*.m~
+
+# MATLAB generated binaries / compiled artifacts
+*.mex*
+*.p
+*.mlappinstall
+
+# Simulink / Stateflow generated files
+slprj/
+*.slxc
+
+# MATLAB project/session settings
+*.prj
+*.mlproj
+*.mlproj.user
+*.mldatx
+
+# MATLAB workspace and data snapshots
+*.mat
+!simData.mat
+!tempSimData.mat
+
+# Test and coverage outputs
+coverage*
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
