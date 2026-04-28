@@ -1,5 +1,8 @@
 function [attempts,simtime] = runSimulation(handles)
 
+attempts = [];
+simtime = [];
+
 loop = str2double(handles.numBombs.String);
 dt = str2double(handles.dtText.String);
 
